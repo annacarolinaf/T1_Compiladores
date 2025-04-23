@@ -71,7 +71,7 @@ public class AnalisadorLexico {
                 cadeia.append(c);
                 i++;
 
-                while (i < codigo.length() && codigo.charAt(i) != '"') {
+                while (i < codigo.length() && codigo.charAt(i) != '"' && codigo.charAt(i) != '\n') {
                     cadeia.append(codigo.charAt(i));
                     i++;
                     
@@ -119,7 +119,10 @@ public class AnalisadorLexico {
                             // Detecta o intervalo ".."
                             tokens.add(new Token(numero.toString(), TipoToken.NUM_INT)); // Número antes do intervalo
                             tokens.add(new Token("..", TipoToken.OPERADOR)); // Token para o operador de intervalo
+                            
+                            numero = new StringBuilder(); //Para zerar o número
                             i += 2; // Avança para o próximo número após ".."
+                            
                             continue; // Avança para a próxima iteração sem processar o número após o intervalo
                         } else if (i + 1 < codigo.length() && Character.isDigit(codigo.charAt(i + 1))) {
                             temPonto = true; // O ponto é parte de um número real
@@ -186,3 +189,4 @@ public class AnalisadorLexico {
         return tokens;
     }
 }
+
