@@ -1,8 +1,13 @@
 import java.io.*;
 import java.util.*;
-
+/**
+ * Classe responsável por realizar a análise léxica de um código-fonte,
+ * identificando tokens como palavras reservadas, identificadores, números,
+ * operadores, símbolos, strings e erros léxicos.
+ */
 public class AnalisadorLexico {
 
+    // Conjunto de palavras reservadas da linguagem
     private static final Set<String> palavrasReservadas = new HashSet<>(Arrays.asList(
             "algoritmo", "declare", "constante", "tipo",
             "literal", "inteiro", "real", "logico", "verdadeiro", "falso",
@@ -12,12 +17,18 @@ public class AnalisadorLexico {
             "faca", "fim_para", "enquanto", "fim_enquanto", "retorne", "nao",
             "fim_algoritmo", "e", "ou"));
 
+    // Conjunto de símbolos simples
     private static final Set<Character> simbolos = new HashSet<>(Arrays.asList(
             ':', '(', ')', ',', '.', '[', ']', '^', '&'));
-
+    
+    // Conjunto de operadores simples
     private static final Set<Character> operadores = new HashSet<>(Arrays.asList(
             '+', '-', '*', '/', '%', '=', '<', '>'));
 
+    /**
+     * Método principal de análise léxica.
+     * Recebe o código-fonte como uma string e retorna a lista de tokens reconhecidos.
+     */
     public static List<Token> analisar(String codigo) {
         List<Token> tokens = new ArrayList<>();
         int i = 0;
@@ -26,16 +37,19 @@ public class AnalisadorLexico {
         while (i < codigo.length()) {
             char c = codigo.charAt(i);
 
+            // Contagem de linhas
             if (c == '\n') {
                 linha++;
             }
 
+            // Ignora espaços em branco
             if (Character.isWhitespace(c)) {
                 i++;
                 continue;
             }
 
             // Comentários { ... }
+            // Tratamento de comentários iniciados por '{'
             if (c == '{') {
                 int linhaComentario = linha;
                 i++;
@@ -44,6 +58,7 @@ public class AnalisadorLexico {
                 while (i < codigo.length()) {
                     char atual = codigo.charAt(i);
                     if (atual == '\n') {
+                        // Comentário não fechado na mesma linha
                         tokens.add(Token.erro("Linha " + linhaComentario + ": comentario nao fechado"));
                         return tokens;
                     }
@@ -55,6 +70,7 @@ public class AnalisadorLexico {
                     i++;
                 }
 
+                // Comentário não fechado até o fim do arquivo
                 if (!fechado) {
                     tokens.add(Token.erro("Linha " + linhaComentario + ": comentario nao fechado"));
                     return tokens;
@@ -65,12 +81,13 @@ public class AnalisadorLexico {
 
             
 
-            // Cadeia de caracteres
+            // Cadeias de caracteres entre aspas
             if (c == '"') {
                 StringBuilder cadeia = new StringBuilder();
                 cadeia.append(c);
                 i++;
 
+                // Lê até encontrar outra aspa ou quebra de linha
                 while (i < codigo.length() && codigo.charAt(i) != '"' && codigo.charAt(i) != '\n' ) {
                     cadeia.append(codigo.charAt(i));
                     i++;
