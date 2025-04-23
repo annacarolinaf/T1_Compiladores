@@ -8,7 +8,7 @@
 
 ### Sistema Operacional testado:
 - Ubuntu 22.04 LTS
-- 
+  
 ## Para compilar o projeto, use:
 
 javac src/*.java -d bin
