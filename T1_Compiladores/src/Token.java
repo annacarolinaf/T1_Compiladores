@@ -1,19 +1,26 @@
+/**
+ * Classe que representa um token identificado pelo analisador léxico.
+ * Cada token possui um lexema (texto correspondente no código-fonte)
+ * e um tipo (classificado segundo o enum TipoToken).
+ */
 public class Token {
 
  
-
+    // O texto original do token, extraído do código-fonte
     public String lexema;
  
-
+    // O tipo do token, baseado na enumeração TipoToken
     public TipoToken tipo;
  
 
     public String mensagemErro; // Campo adicional para erros
  
-
-
- 
-
+    /**
+     * Construtor padrão para tokens válidos.
+     *
+     * @param lexema o texto do token (ex: "leia", "idade", "42")
+     * @param tipo o tipo do token (ex: IDENT, NUM_INT, etc.)
+     */
     public Token(String lexema, TipoToken tipo) {
  
 
@@ -26,9 +33,11 @@ public class Token {
     }
  
 
-
- 
-
+     /**
+     * Construtor específico para tokens inválidos.
+     *
+     * @param mensagemErro descrição do erro léxico encontrado
+     */
     public Token(String mensagemErro) {
  
 
@@ -80,9 +89,10 @@ public class Token {
     }
  
 
-
- 
-
+    /**
+     * Retorna uma representação em string do token,
+     * com formatação especial para tokens válidos e erros.
+     */
     @Override
  
 
@@ -100,7 +110,7 @@ public class Token {
 
 
  
-
+          // Formata tokens do tipo IDENT, CADEIA, NUM_INT, NUM_REAL
         if (tipo == TipoToken.IDENT || tipo == TipoToken.CADEIA || tipo == TipoToken.NUM_INT || tipo == TipoToken.NUM_REAL) {
  
 
@@ -111,8 +121,7 @@ public class Token {
  
 
         
- 
-
+       // Formata os demais tokens (como palavras reservadas, operadores, símbolos)
         return "<'" + lexema + "','" + tipoToString() + "'>";
  
 
@@ -121,7 +130,10 @@ public class Token {
 
 
  
-
+    /**
+     * Auxiliar para converter o tipo do token para uma string amigável.
+     * Para palavras-chave e símbolos, retorna o próprio lexema.
+     */
     private String tipoToString() {
  
 
