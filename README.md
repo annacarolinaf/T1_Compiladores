@@ -1,4 +1,4 @@
-#Grupo:
+# Grupo:
 
 Anna Carolina Farias RA: 81148
 
@@ -6,7 +6,7 @@ Adriano Tavares RA: 811389
 
 Nataly Cristina da Silva RA: 812719
 
-#Comandos para rodar:
+# Comandos para rodar:
 
 javac src/*.java -d bin
 
